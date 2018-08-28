@@ -14,3 +14,13 @@ class IsOwnerOrReadOnly(permissions.BasePermission):
 
         # Instance must have an attribute named `owner`.
         return obj.owner == request.user
+
+
+class AnonPermissionOnly(permissions.BasePermission):
+    message = 'You are already authenticated. Please log out to try again.'
+    """
+    Non-authenicated Users only
+    """
+
+    def has_permission(self, request, view):
+        return not request.user.is_authenticated

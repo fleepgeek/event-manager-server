@@ -1,13 +1,16 @@
 from rest_framework import serializers
 
 from event.models import Event
+from accounts.api.user.serializers import UserPublicSerializer
 
 class EventSerializer(serializers.ModelSerializer):
+    creator = UserPublicSerializer(read_only=True)
+
     class Meta:
         model = Event
         fields = (
-            # 'creator',    
-            'title',      
+            'title', 
+            'creator',     
             'category',   
             'tags',       
             'description',
@@ -17,3 +20,5 @@ class EventSerializer(serializers.ModelSerializer):
             # 'longitude',  
             'created_on', 
         )
+
+        # read_only_fields = ['user']

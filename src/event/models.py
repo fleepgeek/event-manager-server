@@ -23,7 +23,7 @@ class Tag(models.Model):
         return self.name
 
 
-class Event(models.Model):
+class Event(models.Model): # add event image field
     creator     = models.ForeignKey(User, on_delete=models.CASCADE)
     title       = models.CharField(max_length=120)
     category    = models.ForeignKey(Category, on_delete=models.SET_NULL, blank=True, null=True)
