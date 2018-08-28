@@ -1,8 +1,9 @@
 from django.db import models
-from django.conf import settings
+from django.contrib.auth import get_user_model
 
-User = settings.AUTH_USER_MODEL
+from rest_framework.reverse import reverse
 
+User = get_user_model()
 
 class Category(models.Model):
     name = models.CharField(max_length=120)
@@ -38,6 +39,28 @@ class Event(models.Model): # add event image field
     def __str__(self):
         return self.title
     
+    def get_api_uri(self, request=None):
+        return reverse('api-event:detail', kwargs={"id": self.id}, request=request)
+
     @property
     def owner(self):
         return self.user
+
+
+class AttendeeManager(models.Manager):
+    def is_registered(self, event, user):
+        registered = False
+        qs = self.get_queryset().filter(event=event, user=user)
+        if qs.exists():
+            registered = True
+        return registered
+
+class Attendee(models.Model):
+    event           = models.ForeignKey(Event, on_delete=models.CASCADE)
+    user            = models.ForeignKey(User, on_delete=models.CASCADE)
+    registered_on   = models.DateTimeField(auto_now_add=True)
+
+    objects = AttendeeManager()
+
+    def __str__(self):
+        return self.user.username
