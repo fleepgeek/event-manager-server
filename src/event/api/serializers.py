@@ -21,7 +21,7 @@ class EventSerializer(serializers.ModelSerializer):
             # 'latitude',   
             # 'longitude',  
             # 'attendees',
-            'created_on', 
+            'created_on',
         )
 
     def get_uri(self, obj):
@@ -46,8 +46,3 @@ class EventInlineUserSerializer(EventSerializer):
 
         # read_only_fields = ['user']
 
-
-class AttendeeSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Attendee
-        fields = ('event', 'user',)
