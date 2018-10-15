@@ -7,12 +7,13 @@ name = "pypi"
 
 [packages]
 
-django = "*"
+django = "==2.1.2"
 djangorestframework = "*"
 markdown = "*"
 django-filter = "*"
 pillow = "*"
 djangorestframework-jwt = "*"
+
 
 [dev-packages]
 
