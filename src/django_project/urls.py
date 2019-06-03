@@ -15,10 +15,17 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.conf import settings
 
 urlpatterns = [
     path('api/user/', include('accounts.api.user.urls', namespace='api-user')),
     path('api/auth/', include('accounts.api.urls', namespace='api-auth')),
-    path('api/event/', include('event.api.urls', namespace='api-event')),
+    path('api/events/', include('event.api.urls', namespace='api-event')),
     path('admin/', admin.site.urls),
 ]
+
+if settings.DEBUG:
+    import debug_toolbar
+    urlpatterns = [
+        path('__debug__/', include(debug_toolbar.urls)),
+    ] + urlpatterns

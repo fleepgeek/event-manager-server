@@ -14,7 +14,8 @@ User = get_user_model()
 class EventAPIView(generics.CreateAPIView, generics.ListAPIView):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     serializer_class = EventSerializer
-    queryset = Event.objects.all()
+    # queryset = Event.objects.all()
+    queryset = Event.objects.all().select_related('category', 'creator').prefetch_related('tags')
 
     def perform_create(self, serializer):
         serializer.save(creator=self.request.user)

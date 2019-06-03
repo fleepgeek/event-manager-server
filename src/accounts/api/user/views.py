@@ -16,15 +16,15 @@ class UserDetailAPIView(generics.RetrieveUpdateAPIView):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     serializer_class = UserDetailSerializer
     queryset = User.objects.all()
-    lookup_field = 'username'
+    lookup_field = 'pk'
 
 class UserEventAPIView(EventAPIView):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     serializer_class = EventInlineUserSerializer
 
     def get_queryset(self):
-        username = self.kwargs.get('username')
-        qs = Event.objects.filter(creator__username=username)
+        user_id = self.kwargs.get('pk')
+        qs = Event.objects.filter(creator__pk=user_id)
         return qs
 
     def post(self, request, *args, **kwargs):
@@ -36,7 +36,7 @@ class UserEventAttendingListView(generics.ListAPIView):
     serializer_class = EventSerializer
     
     def get_queryset(self):
-        username = self.kwargs.get('username')
-        qs = Event.objects.filter(attendee__user__username=username)
+        user_id = self.kwargs.get('pk')
+        qs = Event.objects.filter(attendee__user__pk=user_id)
         return qs
     

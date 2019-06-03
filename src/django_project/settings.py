@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'rest_framework',
+    'corsheaders',
+    'debug_toolbar',
 
     'event',
     'accounts',
@@ -47,6 +49,8 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -124,6 +128,9 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+# django-debug-toobar
+
+INTERNAL_IPS = ['127.0.0.1',]
 
 # User
 
@@ -132,3 +139,13 @@ AUTH_USER_MODEL = 'accounts.User'
 # DRF
 
 from django_project.rest_conf.main import *
+
+#django-cors-headers
+# CORS_ORIGIN_ALLOW_ALL = True
+CORS_ORIGIN_WHITELIST = (
+    'http://localhost:3000',
+    'http://127.0.0.1:3000',
+)
+# CORS_ORIGIN_REGEX_WHITELIST = (
+#     'localhost:3030',
+# )
